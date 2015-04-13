@@ -3,14 +3,11 @@
  */
 package org.ringr.tally.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * @author ptzhuf
  *
  */
-@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "没找到页面")
 public class CommonException extends RuntimeException {
 
 	/**
