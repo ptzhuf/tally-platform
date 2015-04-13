@@ -17,3 +17,8 @@ hs_err_pid*
 /tally-web/.settings
 /tally-web/target
 /tally-web/.classpath
+/tally-api/.settings
+/*/.settings
+/*/.project
+/*/target
+/*/.classpath
