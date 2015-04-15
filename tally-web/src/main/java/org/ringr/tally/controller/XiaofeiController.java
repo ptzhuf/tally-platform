@@ -52,5 +52,6 @@ public class XiaofeiController {
 		LOG.info("用户{}记录消费", user.getName());
 		xiaofeiService.save(amount, addr, desc, time, user);
 	}
+	
 
 }

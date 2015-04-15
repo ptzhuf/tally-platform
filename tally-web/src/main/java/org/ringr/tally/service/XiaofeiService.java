@@ -38,6 +38,11 @@ public class XiaofeiService {
 	public void save(Double amount, String addr, String desc, Long time,
 			User user) {
 		Xiaofei xiaofei = new Xiaofei();
+		xiaofei.setAmount(amount);
+		xiaofei.setAddr(addr);
+		xiaofei.setDesc(desc);
+		xiaofei.setTime(time);
+		xiaofei.setUser(user);
 		xiaofeiRepository.save(xiaofei);
 
 	}

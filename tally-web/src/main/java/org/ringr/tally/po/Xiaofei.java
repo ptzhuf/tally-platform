@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 public class Xiaofei {
 
 	private String id;
-	private String amount;
+	private Double amount;
 	private String addr;
 	private String desc;
 	@DBRef
@@ -33,19 +33,20 @@ public class Xiaofei {
 		this.id = id;
 	}
 
-	/**
-	 * @return the amount
-	 */
-	public String getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
 
-	/**
-	 * @param amount
-	 *            the amount to set
-	 */
-	public void setAmount(String amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	/**
@@ -95,11 +96,6 @@ public class Xiaofei {
 
 	private Long time;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -111,6 +107,8 @@ public class Xiaofei {
 		builder.append(addr);
 		builder.append(", desc=");
 		builder.append(desc);
+		builder.append(", user=");
+		builder.append(user);
 		builder.append(", time=");
 		builder.append(time);
 		builder.append("]");
