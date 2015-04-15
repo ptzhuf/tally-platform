@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8"></meta>
-<title>Insert title here</title>
+<title></title>
 <!-- Bootstrap core CSS -->
 <link
 	href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"
@@ -19,8 +19,6 @@ body {
 </style>
 </head>
 <body>
-
-
 	<nav class="navbar navbar-inverse navbar-fixed-top"
 		th:replace="fragments/header :: header">
 		<div class="container">
@@ -32,32 +30,14 @@ body {
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Project name</a>
+				<a class="navbar-brand" href="index">记账平台</a>
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#about">About</a></li>
-					<li><a href="#contact">Contact</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false">Dropdown
-							<span class="caret"></span>
-					</a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Action</a></li>
-							<li><a href="#">Another action</a></li>
-							<li><a href="#">Something else here</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Nav header</li>
-							<li><a href="#">Separated link</a></li>
-							<li><a href="#">One more separated link</a></li>
-						</ul></li>
+					<li class="active"><a href="#">我要记账<span class="sr-only">(current)</span></a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="../navbar/">Default</a></li>
-					<li><a href="../navbar-static-top/">Static top</a></li>
-					<li class="active"><a href="./">Fixed top <span
-							class="sr-only">(current)</span></a></li>
+					<li><a href="/user/">管理员</a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
@@ -68,14 +48,31 @@ body {
 
 		<!-- Main component for a primary marketing message or call to action -->
 		<div class="jumbotron">
-			<h1>欢迎来到记账平台.</h1>
-			<p>记账平台啥也没干,就是帮你记账.ლ(°◕‵ƹ′◕ლ)</p>
-			<p>To see the difference between static and fixed top navbars,
-				just scroll.</p>
-			<p>
-				<a class="btn btn-lg btn-primary" href="../../components/#navbar"
-					role="button">View navbar docs &raquo;</a>
-			</p>
+			<form>
+				<div class="form-group">
+					<label for="amountInput">消费金额</label>
+					<div class="input-group">
+						<span class="input-group-addon">￥</span><input type="email"
+							class="form-control" id="amountInput"
+							placeholder="请输入消费金额, 精确到小数点后两位"><span
+							class="input-group-addon">.00</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="addrInput">消费地点</label> <input type="text"
+						class="form-control" id="addrInput" placeholder="请输入地点">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputFile">File input</label> <input type="file"
+						id="exampleInputFile">
+					<p class="help-block">Example block-level help text here.</p>
+				</div>
+				<div class="checkbox">
+					<label> <input type="checkbox"> Check me out
+					</label>
+				</div>
+				<button type="submit" class="btn btn-default">Submit</button>
+			</form>
 		</div>
 
 	</div>
