@@ -3,11 +3,22 @@
  */
 package org.ringr.tally.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.ringr.tally.dto.UserDetail;
+import org.ringr.tally.po.Role;
 import org.ringr.tally.po.User;
 import org.ringr.tally.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,10 +26,16 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
+
+	/**
+	 * logger.
+	 */
+	private static final Logger LOG = LoggerFactory
+			.getLogger(UserService.class);
 
 	@Autowired
-	private UserRepository userReposiotry;
+	private UserRepository userRepository;
 
 	/**
 	 * 获取用户.
@@ -27,10 +44,52 @@ public class UserService {
 	 * @return
 	 */
 	public UserDetail get(String name) {
-		User user = userReposiotry.findByName(name);
+		User user = userRepository.findByName(name);
 		UserDetail result = new UserDetail();
 		BeanUtils.copyProperties(user, result);
 		return result;
 	}
 
+	/**
+	 * 保存用户.
+	 * 
+	 * @param name
+	 *            用户名
+	 * @param password
+	 *            用户密码
+	 * @param roles
+	 *            角色集
+	 */
+	public void save(String name, String password, List<Role> roles) {
+		LOG.info("创建用户 : {}, 角色 : {}", name, roles);
+		User user = new User();
+		user.setName(name);
+		String sha1Password = new ShaPasswordEncoder().encodePassword(password,
+				null);
+		user.setPassword(sha1Password);
+		user.setRoles(roles);
+		userRepository.save(user);
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username)
+			throws UsernameNotFoundException {
+		User user = userRepository.findByName(username);
+		UserDetails userDetails = null;
+		if (user != null) {
+			List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
+			List<Role> roles = user.getRoles();
+			if (roles != null) {
+				for (Role role : roles) {
+					SimpleGrantedAuthority e = new SimpleGrantedAuthority(
+							role.getRolename());
+					authorities.add(e);
+				}
+			}
+			String password = user.getPassword();
+			userDetails = new org.springframework.security.core.userdetails.User(
+					username, password, authorities);
+		}
+		return userDetails;
+	}
 }
