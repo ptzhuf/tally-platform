@@ -40,9 +40,8 @@ public class UserServiceTest {
 		String rolename = "ROLE_ADMIN";
 		e.setRolename(rolename);
 		roles.add(e);
-		String password = new ShaPasswordEncoder().encodePassword("123456",
-				null);
-		String name = "ptzhuf";
+		String password = "123456";
+		String name = "ptzhuf1";
 		userService.save(name, password, roles);
 	}
 

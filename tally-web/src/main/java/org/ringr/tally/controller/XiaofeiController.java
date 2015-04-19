@@ -8,6 +8,7 @@ import org.ringr.tally.service.XiaofeiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,10 +49,8 @@ public class XiaofeiController {
 	@RequestMapping(value = "/xiaofei", method = RequestMethod.POST)
 	public @ResponseBody void post(Long time, Double amount, String addr,
 			String desc, @ModelAttribute User user) {
-
 		LOG.info("用户{}记录消费", user.getName());
 		xiaofeiService.save(amount, addr, desc, time, user);
 	}
-	
 
 }

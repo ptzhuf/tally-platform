@@ -27,12 +27,18 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 	private SecurityProperties security;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private SpringAuthenticationSuccessHandler successHandler;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/css/**").permitAll()
 				.anyRequest().fullyAuthenticated().and().formLogin()
 				.loginPage("/login").failureUrl("/login?error").permitAll();
+		http.csrf().disable();
+		// AuthenticationSuccessHandler successHandler = new
+		// SpringAuthenticationSuccessHandler();
+		http.formLogin().successHandler(successHandler);
 	}
 
 	@Override
