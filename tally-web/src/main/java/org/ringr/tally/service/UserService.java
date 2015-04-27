@@ -59,16 +59,23 @@ public class UserService implements UserDetailsService {
 	 *            用户密码
 	 * @param roles
 	 *            角色集
+	 * @return 用户信息
 	 */
-	public void save(String name, String password, List<Role> roles) {
+	public UserDetail save(String name, String password, List<Role> roles) {
 		LOG.info("创建用户 : {}, 角色 : {}", name, roles);
+		// TODO 检查用户重名
+		// TODO 检查角色是否允许被分配
+
 		User user = new User();
 		user.setName(name);
 		String sha1Password = new ShaPasswordEncoder().encodePassword(password,
 				null);
 		user.setPassword(sha1Password);
 		user.setRoles(roles);
-		userRepository.save(user);
+		user = userRepository.save(user);
+		UserDetail detail = new UserDetail();
+		BeanUtils.copyProperties(user, detail);
+		return detail;
 	}
 
 	@Override
