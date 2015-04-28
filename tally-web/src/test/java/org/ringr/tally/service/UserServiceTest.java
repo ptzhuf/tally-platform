@@ -12,7 +12,6 @@ import org.ringr.tally.TallyWebApplication;
 import org.ringr.tally.po.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
@@ -41,7 +40,7 @@ public class UserServiceTest {
 		e.setRolename(rolename);
 		roles.add(e);
 		String password = "123456";
-		String name = "ptzhuf1";
+		String name = "ptzhuf";
 		userService.save(name, password, roles);
 	}
 
