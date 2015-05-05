@@ -5,6 +5,7 @@ package org.ringr.tally.controller.admin;
 
 import java.util.List;
 
+import org.ringr.tally.dto.SaveUserRequest;
 import org.ringr.tally.dto.UserDetail;
 import org.ringr.tally.po.Role;
 import org.ringr.tally.service.UserService;
@@ -49,9 +50,12 @@ public class UserAdminController {
 	 */
 	@RequestMapping(value = "/admin/user", method = RequestMethod.POST)
 	@Secured("ROLE_ADMIN")
-	public @ResponseBody UserDetail saveUser(String username, String password,
-			List<Role> roles) {
+	public @ResponseBody UserDetail saveUser(SaveUserRequest saveUserRequest) {
+		List<Role> roles = saveUserRequest.getRoles();
+		String username = saveUserRequest.getUsername();
+		String password = saveUserRequest.getPassword();
 		LOG.info("调用创建用户{}, 角色:{}", username, roles);
+		// TODO 处理Roles数组问题, 如果用 roles[0].rolename 有可能遇到为空的情况
 		UserDetail result = userService.save(username, password, roles);
 		return result;
 	}
