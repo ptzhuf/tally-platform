@@ -99,4 +99,23 @@ public class UserService implements UserDetailsService {
 		}
 		return userDetails;
 	}
+
+	/**
+	 * 用户列表.
+	 * 
+	 * @return
+	 */
+	public List<UserDetail> findAllUserDetail() {
+		Iterable<User> userList = userRepository.findAll();
+		List<UserDetail> userDetailList = null;
+		if (userList != null && userList != null) {
+			userDetailList = new ArrayList<>();
+			for (User user : userList) {
+				UserDetail userDetail = new UserDetail();
+				BeanUtils.copyProperties(user, userDetail);
+				userDetailList.add(userDetail);
+			}
+		}
+		return userDetailList;
+	}
 }

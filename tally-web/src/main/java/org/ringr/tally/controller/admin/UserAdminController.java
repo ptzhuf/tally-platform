@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -53,5 +54,15 @@ public class UserAdminController {
 		LOG.info("调用创建用户{}, 角色:{}", username, roles);
 		UserDetail result = userService.save(username, password, roles);
 		return result;
+	}
+
+	@RequestMapping(value = "/admin/user", method = RequestMethod.GET)
+	@Secured("ROLE_ADMIN")
+	public String index(Model model) {
+		List<UserDetail> userList = userService.findAllUserDetail();
+		// TODO 查询用户列表
+		// 添加用户列表到model上下文
+		model.addAttribute("userList", userList);
+		return "admin/user/index";
 	}
 }
