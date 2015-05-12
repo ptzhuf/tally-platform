@@ -10,6 +10,7 @@ import org.ringr.tally.dto.SaveUserRequest;
 import org.ringr.tally.dto.UserDetail;
 import org.ringr.tally.exception.RestBizException;
 import org.ringr.tally.po.Role;
+import org.ringr.tally.service.RoleService;
 import org.ringr.tally.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,8 @@ public class UserAdminController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RoleService roleService;
 
 	/**
 	 * 保存用户信息.
@@ -69,15 +72,18 @@ public class UserAdminController {
 			LOG.error("错误信息:", e);
 			throw new RestBizException(msg, e);
 		}
-}
+	}
 
 	@RequestMapping(value = "/admin/user", method = RequestMethod.GET)
 	@Secured("ROLE_ADMIN")
 	public String index(Model model) {
+		// 查询用户列表
 		List<UserDetail> userList = userService.findAllUserDetail();
-		// TODO 查询用户列表
+		// 查角色列表
+		List<Role> roleList = roleService.findAll();
 		// 添加用户列表到model上下文
 		model.addAttribute("userList", userList);
+		model.addAttribute("roleList", roleList);
 		return "admin/user/index";
 	}
 }

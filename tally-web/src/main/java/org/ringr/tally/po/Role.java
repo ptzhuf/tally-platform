@@ -3,11 +3,16 @@
  */
 package org.ringr.tally.po;
 
+import org.springframework.data.annotation.Id;
+
 /**
  * @author ptzhuf
  *
  */
 public class Role {
+
+	@Id
+	private String id;
 
 	private String rolename;
 

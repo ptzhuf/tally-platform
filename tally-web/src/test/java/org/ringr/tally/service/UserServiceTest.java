@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ringr.tally.TallyWebApplication;
+import org.ringr.tally.exception.NotExistException;
 import org.ringr.tally.exception.NotUniqueException;
 import org.ringr.tally.po.Role;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,10 @@ public class UserServiceTest {
 	 * {@link org.ringr.tally.service.UserService#save(java.lang.String, java.lang.String, java.util.List)}
 	 * .
 	 * @throws NotUniqueException 
+	 * @throws NotExistException 
 	 */
 	@Test
-	public final void testSave() throws NotUniqueException {
+	public final void testSave() throws NotUniqueException, NotExistException {
 		List<Role> roles = new ArrayList<Role>();
 		Role e = new Role();
 		String rolename = "ROLE_ADMIN";

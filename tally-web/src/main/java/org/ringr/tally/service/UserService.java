@@ -6,7 +6,9 @@ package org.ringr.tally.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.ringr.tally.dto.UserDetail;
+import org.ringr.tally.exception.NotExistException;
 import org.ringr.tally.exception.NotUniqueException;
 import org.ringr.tally.po.Role;
 import org.ringr.tally.po.User;
@@ -38,6 +40,9 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private RoleService roleService;
+
 	/**
 	 * 获取用户.
 	 * 
@@ -61,18 +66,36 @@ public class UserService implements UserDetailsService {
 	 * @param roles
 	 *            角色集
 	 * @return 用户信息
-	 * @throws NotUniqueException NotUniqueException
+	 * @throws NotUniqueException
+	 *             NotUniqueException
+	 * @throws NotExistException
+	 *             NotExistException
 	 */
-	public UserDetail save(String name, String password, List<Role> roles) throws NotUniqueException {
+	public UserDetail save(String name, String password, List<Role> roles)
+			throws NotUniqueException, NotExistException {
 		LOG.info("创建用户 : {}, 角色 : {}", name, roles);
 		// 检查用户重名
-		User userValid = userRepository.findByName(name);
-		if (userValid != null) {
+		User userCheck = userRepository.findByName(name);
+		if (userCheck != null) {
 			String msg = "用户[" + name + "]重名";
 			LOG.error(msg);
 			throw new NotUniqueException(msg);
 		}
-		// TODO 检查角色是否存在
+		// 检查角色是否存在
+		for (Role role : roles) {
+			String rolename = role.getRolename();
+			if (StringUtils.isBlank(rolename)) {
+				roles.remove(role);
+			} else {
+				// 检查角色存在
+				Role roleCheck = roleService.findByRolename(rolename);
+				if (roleCheck == null) {
+					String msg = "角色[" + rolename + "]不存在";
+					LOG.error(msg);
+					throw new NotExistException(msg);
+				}
+			}
+		}
 
 		User user = new User();
 		user.setName(name);

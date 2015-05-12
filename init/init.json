@@ -11,5 +11,17 @@
         }
       ]
     }
+  ],
+  "role": [
+    {
+      "_id": "5551c7b71d2e22e5aff38eed",
+      "_class": "org.ringr.tally.po.Role",
+      "rolename": "ROLE_USER"
+    },
+    {
+      "_id": "5551cd971d2e78fba213ba77",
+      "_class": "org.ringr.tally.po.Role",
+      "rolename": "ROLE_ADMIN"
+    }
   ]
 }

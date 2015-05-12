@@ -14,6 +14,7 @@ import org.ringr.tally.po.Role;
 public class SaveUserRequest {
 	private String username;
 	private String password;
+	private List<Role> roles;
 
 	@Override
 	public String toString() {
@@ -52,5 +53,4 @@ public class SaveUserRequest {
 		this.roles = roles;
 	}
 
-	private List<Role> roles;
 }
