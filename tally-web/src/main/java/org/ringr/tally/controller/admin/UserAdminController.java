@@ -6,6 +6,7 @@ package org.ringr.tally.controller.admin;
 import java.util.Arrays;
 import java.util.List;
 
+import org.ringr.tally.dto.SaveUserRequest;
 import org.ringr.tally.dto.UserDetail;
 import org.ringr.tally.exception.RestBizException;
 import org.ringr.tally.po.Role;
@@ -51,8 +52,10 @@ public class UserAdminController {
 	 */
 	@RequestMapping(value = "/admin/user", method = RequestMethod.POST)
 	@Secured("ROLE_ADMIN")
-	public @ResponseBody UserDetail saveUser(String username, String password,
-			List<Role> roles) {
+	public @ResponseBody UserDetail saveUser(SaveUserRequest saveUserRequest) {
+		List<Role> roles = saveUserRequest.getRoles();
+		String username = saveUserRequest.getUsername();
+		String password = saveUserRequest.getPassword();
 		try {
 			LOG.info("调用创建用户{}, 角色:{}", username, roles);
 			UserDetail result = userService.save(username, password, roles);
@@ -66,7 +69,7 @@ public class UserAdminController {
 			LOG.error("错误信息:", e);
 			throw new RestBizException(msg, e);
 		}
-	}
+}
 
 	@RequestMapping(value = "/admin/user", method = RequestMethod.GET)
 	@Secured("ROLE_ADMIN")
