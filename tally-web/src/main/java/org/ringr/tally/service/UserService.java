@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ringr.tally.dto.UserDetail;
+import org.ringr.tally.exception.NotUniqueException;
 import org.ringr.tally.po.Role;
 import org.ringr.tally.po.User;
 import org.ringr.tally.repository.UserRepository;
@@ -60,11 +61,18 @@ public class UserService implements UserDetailsService {
 	 * @param roles
 	 *            角色集
 	 * @return 用户信息
+	 * @throws NotUniqueException NotUniqueException
 	 */
-	public UserDetail save(String name, String password, List<Role> roles) {
+	public UserDetail save(String name, String password, List<Role> roles) throws NotUniqueException {
 		LOG.info("创建用户 : {}, 角色 : {}", name, roles);
-		// TODO 检查用户重名
-		// TODO 检查角色是否允许被分配
+		// 检查用户重名
+		User userValid = userRepository.findByName(name);
+		if (userValid != null) {
+			String msg = "用户[" + name + "]重名";
+			LOG.error(msg);
+			throw new NotUniqueException(msg);
+		}
+		// TODO 检查角色是否存在
 
 		User user = new User();
 		user.setName(name);

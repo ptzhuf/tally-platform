@@ -1,0 +1,15 @@
+{
+  "user": [
+    {
+      "_id": "553ef1511d2e1de97a9785c7",
+      "_class": "org.ringr.tally.po.User",
+      "name": "ptzhuf",
+      "password": "7c4a8d09ca3762af61e59520943dc26494f8941b",
+      "roles": [
+        {
+          "rolename": "ROLE_ADMIN"
+        }
+      ]
+    }
+  ]
+}

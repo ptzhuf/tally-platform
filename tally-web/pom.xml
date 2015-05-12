@@ -55,6 +55,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.ringr.tally</groupId>
 			<artifactId>tally-api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
